@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<style>
+img {
+  width: 1000px;
+  height: auto;
+  image-rendering: pixelated;
+}
+</style>
+<body>
+    <canvas>
+    <button id="b">kk</button>
+    <script>
+
+class Line{
+
+}
+
+  function render(canvas,pixelColors){
+  canvas.width = pixelColors[0].length;
+  canvas.height = pixelColors.length;
+  const context = canvas.getContext('2d');
+  var imdt  = context.getImageData(0,0,2,2);
+  canvas.height=pixelColors.length;
+  canvas.width=pixelColors[0].length;
+  console.time('3');
+  for (let i = 0; i < canvas.height; i++) {
+    for (let j = 0; j < canvas.width; j++) {
+      imdt.data[(i*canvas.width+j)]=pixelColors[i][j];
+      //context.fillRect(j, i, 1, 1);
+    }
+  }
+  console.timeEnd('3');
+};
+//const nyanCat = [["#00000000","#00000000","#00000000","#ff1111ff","#ff1111ff","#ff1111ff","#00000000","#00000000","#00000000","#00000000","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"],["#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#000000ff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"],["#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#ff1111ff","#000000ff","#ffd29bff","#ffd29bff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#ffd29bff","#ffd29bff","#ffd29bff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"],["#ff1111ff","#ff1111ff","#ff1111ff","#fea70aff","#fea70aff","#fea70aff","#ff1111ff","#ff1111ff","#000000ff","#ffd29bff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#ffd29bff","#ffd29bff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"],["#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#ffd29bff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"],["#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#fea70aff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#000000ff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#ffd29bff","#000000ff","#00000000","#00000000","#000000ff","#000000ff","#00000000","#00000000"],["#fea70aff","#fea70aff","#fea70aff","#fefe06ff","#fefe06ff","#fefe06ff","#fea70aff","#fea70aff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#fea4feff","#fea4feff","#fea4feff","#ffd29bff","#000000ff","#00000000","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000"],["#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#fea4feff","#fea4feff","#ffd29bff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000"],["#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#fefe06ff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#000000ff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000"],["#fefe06ff","#fefe06ff","#fefe06ff","#48fe0bff","#48fe0bff","#48fe0bff","#fefe06ff","#fefe06ff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000"],["#48fe0bff","#48fe0bff","#48fe0bff","#48fe0bff","#48fe0bff","#48fe0bff","#48fe0bff","#000000ff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff"],["#48fe0bff","#48fe0bff","#48fe0bff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#ffd29bff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#fefefeff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#fefefeff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff"],["#48fe0bff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#a9a7aaff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff"],["#0eadfeff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#000000ff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#fea4a6ff","#fea4a6ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#fea4a6ff","#fea4a6ff","#000000ff"],["#0eadfeff","#0eadfeff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#0eadfeff","#000000ff","#ffd29bff","#fea4feff","#fea4feff","#eb4ab4ff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#fea4a6ff","#fea4a6ff","#a9a7aaff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#a9a7aaff","#fea4a6ff","#fea4a6ff","#000000ff"],["#0eadfeff","#0eadfeff","#0eadfeff","#7543feff","#7543feff","#7543feff","#0eadfeff","#0eadfeff","#000000ff","#ffd29bff","#ffd29bff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#fea4feff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000"],["#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#000000ff","#000000ff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#ffd29bff","#000000ff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000","#00000000"],["#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#7543feff","#000000ff","#a9a7aaff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#00000000"],["#7543feff","#7543feff","#7543feff","#00000000","#00000000","#00000000","#7543feff","#7543feff","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000","#000000ff","#a9a7aaff","#a9a7aaff","#000000ff","#00000000","#00000000","#00000000"],["#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#00000000","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#000000ff","#000000ff","#000000ff","#00000000","#00000000","#00000000"]];
+//const dis=[["#00000000","#000000ff"],["#00000000","#000000ff"]]
+let dis2=[];
+let swit=true;
+
+console.time('First');
+for(let i=0;i<1000;i++){
+    dis2.push([])
+    for(let j=0;j<1000;j++){
+        if(swit==true){
+            dis2[i].push(0x00000000)
+            swit=false
+        }else{
+            dis2[i].push(0x000000ff)
+            swit=true
+        }
+    }
+}
+console.timeEnd('First')
+
+const canva = document.querySelector('canvas');
+
+console.time('Second');
+render(canva,dis2);
+console.timeEnd('Second');
+
+
+function handler(){
+    const dis2=[["#000000ff","#00000000"],["#00000000","#000000ff"]]
+    const img2 = document.querySelector('img');
+    img2.src = pixels2Base64(dis2);
+}
+
+document.getElementById('b').addEventListener("click",handler);
+    </script>
+</body>
+</html>
