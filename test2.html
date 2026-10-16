@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Line{
+        coef;
+        move;
+        constructor(coef,move){
+            this.coef=coef;
+            this.move=move;
+        }
+        isover(x,y){
+            return (x*this.coef+this.move>y)
+        }
+        isunder(x,y){
+            return (x*this.coef+this.move<y)
+        }
+        intersection(line){
+            co=(this.coef-line.coef);
+            if(co){
+            var x=(-this.move+line.move)/co;
+            return [x,(x*this.coef+this.move)]
+            }else{
+                console.log("ERRROR PARALELING LINES")
+            }
+        }
+    }
+    class Section extends Line{
+
+        constructor(coef,move,minx,maxx){
+            super(coef,move)
+            this.maxx=maxx;
+            this.minx=minx;
+        }
+    }
+    class secarr{
+        linearr=[];
+        secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
+        addline(line){
+            let i=0
+            let stopper=0;
+            
+            for(;arrup[i].coef>line.coef;stopper++);
+            for(;i<stopper;i++){
+                    if (line.intersection(arrup[i])[0]>secup[i]){
+                        arrup.insert(line,i);
+                        countstart=i;
+                    }
+            }
+            let j=stopper
+            for(;arrup.size>j;j++){
+                if (line.intersection(arrup[i])[0]<secup[i]){
+                    arrup.insert(line,i);
+                    return
+                }
+            }
+    }
+    class Fig{
+        arrup=[];
+        secup=[];
+        arrdown=[];
+        secdown=[];
+        addline(line){
+            if(line.move>0){
+                
+            }else if(line.move<0){
+                if(arrdown[i].coef<line.coef){
+                    if(arrdown[i].coef<line.coef){
+                        if (line.intersection(arrdown[i])[0]<=secdown[i+1]){
+                            arrup.insert(line,i);
+                            return
+                        }
+                    }else{
+                        if (line.intersection(arrup[i])[0]>=secup[i+1]){
+                            arrup.insert(line,i);
+                            return
+                        }
+                    }
+                }
+            }  
+        }
+    }
+</script>
+</html>
