@@ -31,36 +31,39 @@
                 console.log("ERRROR PARALELING LINES")
             }
         }
-    }
-    class Section extends Line{
+    };
 
-        constructor(coef,move,minx,maxx){
-            super(coef,move)
-            this.maxx=maxx;
-            this.minx=minx;
-        }
-    }
-    class secarr{
+    class Secarr{
         linearr=[];
+        
         secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
         addline(line){
+            delnum=[];
             let i=0
             let stopper=0;
             
-            for(;arrup[i].coef>line.coef;stopper++);
-            for(;i<stopper;i++){
-                    if (line.intersection(arrup[i])[0]>secup[i]){
-                        arrup.insert(line,i);
+            while(line.coef>linearr[i]){
+                    if (line.intersection(arrup[i])[0]>secup[i+1]){
+                    
                         countstart=i;
+                        i++;
+                        delnum=[i,0]
+                        while(i<linearr.length){
+                            check:{
+                                if(line.coef>linearr[i]){   
+                                    break check;
+                                }
+                                if (line.intersection(arrup[i])[0]<secup[i]){
+
+                                }
+                            }
+                            delnum[1]++;
+                            i++;
+                        }
                     }
+                    i++
             }
-            let j=stopper
-            for(;arrup.size>j;j++){
-                if (line.intersection(arrup[i])[0]<secup[i]){
-                    arrup.insert(line,i);
-                    return
-                }
-            }
+        }
     }
     class Fig{
         arrup=[];
@@ -87,5 +90,6 @@
             }  
         }
     }
+    
 </script>
 </html>
