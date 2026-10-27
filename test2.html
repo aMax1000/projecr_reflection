@@ -9,9 +9,13 @@
     
 </body>
 <script>
+    /*class DoubleArr{
+        arr=[]
+        arrcoef=[]
+    }*/
+
+
     class Line{
-        coef;
-        move;
         constructor(coef,move){
             this.coef=coef;
             this.move=move;
@@ -31,38 +35,66 @@
                 console.log("ERRROR PARALELING LINES")
             }
         }
+        strprint(){
+            return `coef: ${this.coef}\nmove: ${this.move} \n`
+        }
     };
 
     class Secarr{
-        linearr=[];
-        
-        secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
-        addline(line){
-            delnum=[];
+        constructor(){
+            this.linearr=[];
+            this.secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
+        }
+        addline(line,b=false){
             let i=0
-            let stopper=0;
-            
-            while(line.coef>linearr[i]){
-                    if (line.intersection(arrup[i])[0]>secup[i+1]){
-                    
-                        countstart=i;
-                        i++;
-                        delnum=[i,0]
-                        while(i<linearr.length){
-                            check:{
-                                if(line.coef>linearr[i]){   
-                                    break check;
+            if(this.linearr.length!=0){
+                while(i<this.linearr.length && line.coef<this.linearr[i]){
+                        if (
+                            !b && line.intersection(this.linearr[i])[0]<=this.secup[i+1] ||
+                            b && line.intersection(this.linearr[i])[0]>=this.secup[i+1]
+                        ){
+                            this.secup[i+1]=line.intersection(this.linearr[i])[0];
+                            i++
+                            while(i<this.linearr.length){
+                                check:{
+                                    if(
+                                        !b && line.coef<this.linearr[i] ||
+                                        b && line.coef>this.linearr[i]
+                                    ){   
+                                        break check;
+                                    }
+                                    if (
+                                        !b && line.intersection(this.linearr[i])[0]>this.secup[i+1] ||
+                                        b && line.intersection(this.linearr[i])[0]<this.secup[i+1]
+                                    ){
+                                        this.secup.splice(i+1, 0,line.intersection(this.linearr[i])[0]);
+                                        this.linearr.splice(i, 0,line);
+                                        return
+                                    }
                                 }
-                                if (line.intersection(arrup[i])[0]<secup[i]){
-
-                                }
+                                delete this.linearr[i]
+                                delete this.secup[i+1]
                             }
-                            delnum[1]++;
-                            i++;
                         }
-                    }
-                    i++
+                        i++
+                }
+            }else{
+                this.linearr[0]=line;
+                console.log(1)
             }
+        }
+
+
+        strprint(){
+            var a= `sec:${this.secup[0]}\n\n`
+            for(let i=0;i<this.linearr.length;i++){
+                a+=this.linearr[i].strprint();
+                a+=`\nsec: ${this.secup[i+1]}\n\n`
+            }
+            if(this.linearr.length==0){
+                a+=`sec: ${this.secup[1]}\n`
+            }
+            return a
         }
     }
     class Fig{
@@ -89,7 +121,16 @@
                 }
             }  
         }
-    }
-    
+    };
+
+    var e=new Secarr();
+    e.addline(new Line(2,1))
+    console.log(e.strprint())
+    e.addline(new Line(1,2))
+    console.log(e.strprint())
+
+
+    //e.addline(Line(-1,10))
+    //e.addline(Line(-2,20))
 </script>
 </html>
