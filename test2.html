@@ -27,7 +27,7 @@
             return (x*this.coef+this.move<y)
         }
         intersection(line){
-            co=(this.coef-line.coef);
+            let co=(this.coef-line.coef);
             if(co){
             var x=(-this.move+line.move)/co;
             return [x,(x*this.coef+this.move)]
@@ -48,39 +48,80 @@
         addline(line,b=false){
             let i=0
             if(this.linearr.length!=0){
-                while(i<this.linearr.length && line.coef<this.linearr[i]){
+                console.log("d2")
+                returner:{
+                while(i<this.linearr.length && line.coef<=this.linearr[i].coef){
+                    console.log("d3")
+                    console.log(line.intersection(this.linearr[i])[0]<=this.secup[i+1])
                         if (
-                            !b && line.intersection(this.linearr[i])[0]<=this.secup[i+1] ||
-                            b && line.intersection(this.linearr[i])[0]>=this.secup[i+1]
+                            (!b && line.intersection(this.linearr[i])[0]<=this.secup[i+1]) ||
+                            (b && line.intersection(this.linearr[i])[0]>=this.secup[i+1])
                         ){
-                            this.secup[i+1]=line.intersection(this.linearr[i])[0];
-                            i++
-                            while(i<this.linearr.length){
+                            
+                            if(i+1<this.linearr.length){
+                                this.secup[i+1]=line.intersection(this.linearr[i])[0];
+                                i++;
+                                console.log("d5")
+                                break returner
+                            }else{
+                                this.secup[i+2]=this.secup[i+1]
+                                this.secup[i+1]=line.intersection(this.linearr[i])[0];
+                                console.log("d5.5")
+                                this.linearr.splice(i+1, 0,line);
+                                return  
+                            }
+
+                        }
+                        console.log("d6")
+                        i++
+                }
+                console.log("d4")
+                }
+                console.log("d7")
+                whille:{
+                while(i<this.linearr.length){
+                    console.log("d8")
                                 check:{
+                                    console.log("d10")
                                     if(
-                                        !b && line.coef<this.linearr[i] ||
-                                        b && line.coef>this.linearr[i]
+                                        (!b && line.coef<this.linearr[i].coef) ||
+                                        (b && line.coef>this.linearr[i].coef)
                                     ){   
+                                        console.log("d8.8")
                                         break check;
                                     }
+                                    console.log(line.intersection(this.linearr[i])[0])
+                                    console.log(this.secup[i+1])
                                     if (
-                                        !b && line.intersection(this.linearr[i])[0]>this.secup[i+1] ||
-                                        b && line.intersection(this.linearr[i])[0]<this.secup[i+1]
+                                        (!b && line.intersection(this.linearr[i])[0]<this.secup[i+1]) ||
+                                        (b && line.intersection(this.linearr[i])[0]>this.secup[i+1])
                                     ){
+                                        console.log("d9")
                                         this.secup.splice(i+1, 0,line.intersection(this.linearr[i])[0]);
                                         this.linearr.splice(i, 0,line);
                                         return
                                     }
                                 }
+                                console.log(this.linearr[i])
                                 delete this.linearr[i]
+                                for(let j=i;j<this.linearr.length-1;j++){
+                                    this.linearr[j]=this.linearr[j+1]
+                                }
+                                this.linearr.length--
                                 delete this.secup[i+1]
+                                for(let j=i+1;j<this.secup.length-1;j++){
+                                    this.secup[j]=this.secup[j+1]
+                                }
+                                this.secup.length--
                             }
-                        }
-                        i++
+                            this.secup[i+1]=Number.MAX_SAFE_INTEGER;
+                            this.linearr[i]=line;
                 }
+                    //console.log(this.linearr[i])
+         
             }else{
                 this.linearr[0]=line;
-                console.log(1)
+                console.log("d1")
             }
         }
 
@@ -128,7 +169,10 @@
     console.log(e.strprint())
     e.addline(new Line(1,2))
     console.log(e.strprint())
-
+    e.addline(new Line(1.5,1))
+    console.log(e.strprint())
+    e.addline(new Line(1.5,0.9))
+    console.log(e.strprint())
 
     //e.addline(Line(-1,10))
     //e.addline(Line(-2,20))
