@@ -45,29 +45,44 @@
             this.linearr=[];
             this.secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
         }
-        addline(line,b=false){
+        addline(line,b=true){
             let i=0
-            if(this.linearr.length!=0){
+            if(this.linearr.length==0){
+                this.linearr[0]=line;
+                console.log("d1")
+                return
+            }
                 console.log("d2")
-                returner:{
-                while(i<this.linearr.length && line.coef<=this.linearr[i].coef){
-                    console.log("d3")
-                    console.log(line.intersection(this.linearr[i])[0]<=this.secup[i+1])
+                assend:{
+                while(i<this.linearr.length &&(
+                      (!b &&line.coef<=this.linearr[i].coef)||
+                      (b && line.coef>=this.linearr[i].coef))
+                      ){
+                        console.log("d3")
+
+                        //equal coef case
+                        if((!b && (line.coef==this.linearr[i].coef && line.move>=this.linearr[i].move)) ||
+                            (b && (line.coef==this.linearr[i].coef && line.move<=this.linearr[i].move))
+                            ){
+                                return
+                            }
+
+                        //main checker
                         if (
                             (!b && line.intersection(this.linearr[i])[0]<=this.secup[i+1]) ||
                             (b && line.intersection(this.linearr[i])[0]>=this.secup[i+1])
                         ){
-                            
+                            //
                             if(i+1<this.linearr.length){
                                 this.secup[i+1]=line.intersection(this.linearr[i])[0];
                                 i++;
                                 console.log("d5")
-                                break returner
+                                break assend
                             }else{
-                                this.secup[i+2]=this.secup[i+1]
+                                this.secup.push(this.secup[i+1])
                                 this.secup[i+1]=line.intersection(this.linearr[i])[0];
                                 console.log("d5.5")
-                                this.linearr.splice(i+1, 0,line);
+                                this.linearr.push(line);
                                 return  
                             }
 
@@ -81,48 +96,49 @@
                 whille:{
                 while(i<this.linearr.length){
                     console.log("d8")
-                                check:{
-                                    console.log("d10")
-                                    if(
-                                        (!b && line.coef<this.linearr[i].coef) ||
-                                        (b && line.coef>this.linearr[i].coef)
-                                    ){   
-                                        console.log("d8.8")
-                                        break check;
-                                    }
-                                    console.log(line.intersection(this.linearr[i])[0])
-                                    console.log(this.secup[i+1])
-                                    if (
-                                        (!b && line.intersection(this.linearr[i])[0]<this.secup[i+1]) ||
-                                        (b && line.intersection(this.linearr[i])[0]>this.secup[i+1])
-                                    ){
-                                        console.log("d9")
-                                        this.secup.splice(i+1, 0,line.intersection(this.linearr[i])[0]);
-                                        this.linearr.splice(i, 0,line);
-                                        return
-                                    }
-                                }
-                                console.log(this.linearr[i])
-                                delete this.linearr[i]
-                                for(let j=i;j<this.linearr.length-1;j++){
-                                    this.linearr[j]=this.linearr[j+1]
-                                }
-                                this.linearr.length--
-                                delete this.secup[i+1]
-                                for(let j=i+1;j<this.secup.length-1;j++){
-                                    this.secup[j]=this.secup[j+1]
-                                }
-                                this.secup.length--
+                    check:{
+                        console.log("d10")
+                        if(
+                            (!b && line.coef<=this.linearr[i].coef) ||
+                            (b && line.coef>=this.linearr[i].coef)
+                        ){   
+                            console.log("d8.8")
+                            break check;
+                        }
+                                    //console.log(line.intersection(this.linearr[i])[0])
+                                    //console.log(this.secup[i+1])
+                        if (
+                            (!b && line.intersection(this.linearr[i])[0]<this.secup[i+1]) ||
+                            (b && line.intersection(this.linearr[i])[0]>this.secup[i+1])
+                        ){
+                            console.log("d9")
+                            this.secup.splice(i+1, 0,line.intersection(this.linearr[i])[0]);
+                            this.linearr.splice(i, 0,line);
+                            return
                             }
-                            this.secup[i+1]=Number.MAX_SAFE_INTEGER;
-                            this.linearr[i]=line;
+                        }
+                    //console.log(this.linearr[i])
+
+
+                    delete this.linearr[i]
+                    for(let j=i;j<this.linearr.length-1;j++){
+                        this.linearr[j]=this.linearr[j+1]
+                    }
+
+                    this.linearr.length--
+
+
+                    if(i+1<this.secup.length-1){
+                        delete this.secup[i+1]
+                        for(let j=i+1;j<this.secup.length-1;j++){
+                            this.secup[j]=this.secup[j+1]
+                        }
+                        this.secup.length--
+                    }
+                    }
+                    this.linearr[i]=line;
                 }
                     //console.log(this.linearr[i])
-         
-            }else{
-                this.linearr[0]=line;
-                console.log("d1")
-            }
         }
 
 
@@ -171,7 +187,7 @@
     console.log(e.strprint())
     e.addline(new Line(1.5,1))
     console.log(e.strprint())
-    e.addline(new Line(1.5,0.9))
+    e.addline(new Line(-1,2))
     console.log(e.strprint())
 
     //e.addline(Line(-1,10))
