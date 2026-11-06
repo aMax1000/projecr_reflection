@@ -53,9 +53,16 @@
                 while(i<this.linearr.length && line.coef<=this.linearr[i].coef){
                     console.log("d3")
                     console.log(line.intersection(this.linearr[i])[0]<=this.secup[i+1])
+                    if(this.linearr[i].coef==line.coef){
+                        if((!b && this.linearr[i].move<=line.move)||
+                           (b && this.linearr[i].move>=line.move)
+                        ){
+                            return
+                        }
+                    }
                         if (
-                            (!b && line.intersection(this.linearr[i])[0]<=this.secup[i+1]) ||
-                            (b && line.intersection(this.linearr[i])[0]>=this.secup[i+1])
+                            (!b && line.intersection(this.linearr[i])[0]<this.secup[i+1]) ||
+                            (b && line.intersection(this.linearr[i])[0]>this.secup[i+1])
                         ){
                             
                             if(i+1<this.linearr.length){
@@ -64,10 +71,10 @@
                                 console.log("d5")
                                 break returner
                             }else{
-                                this.secup[i+2]=this.secup[i+1]
+                                this.secup.push(this.secup[i+1])
                                 this.secup[i+1]=line.intersection(this.linearr[i])[0];
                                 console.log("d5.5")
-                                this.linearr.splice(i+1, 0,line);
+                                this.linearr.push(line);
                                 return  
                             }
 
@@ -84,8 +91,8 @@
                                 check:{
                                     console.log("d10")
                                     if(
-                                        (!b && line.coef<this.linearr[i].coef) ||
-                                        (b && line.coef>this.linearr[i].coef)
+                                        (!b && line.coef<=this.linearr[i].coef) ||
+                                        (b && line.coef>=this.linearr[i].coef)
                                     ){   
                                         console.log("d8.8")
                                         break check;
@@ -171,7 +178,7 @@
     console.log(e.strprint())
     e.addline(new Line(1.5,1))
     console.log(e.strprint())
-    e.addline(new Line(1.5,0.9))
+    e.addline(new Line(3,1))
     console.log(e.strprint())
 
     //e.addline(Line(-1,10))
