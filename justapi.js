@@ -5,14 +5,14 @@
 
     class Line{
         constructor(coef,move){
-            this.coef=coef;
-            this.move=move;
+            this.coef=parseFloat(coef);
+            this.move=parseFloat(move);
         }
         isover(x,y){
-            return (x*this.coef+this.move>y)
+            return ((x*this.coef+this.move)>y)
         }
         isunder(x,y){
-            return (x*this.coef+this.move<y)
+            return ((x*this.coef+this.move)<y)
         }
         intersection(line){
             let co=(this.coef-line.coef);
@@ -41,7 +41,9 @@
                 console.log("ERRROR PARALELING LINES")
             }
         }
-
+        rotated(){
+            return new Line(-1/this.coef,this.move/this.coef)
+        }
         strprint(){
             return `coef: ${this.coef}\nmove: ${this.move} \n`
         }
@@ -210,23 +212,38 @@
                         console.log(index)
                             switch(index){
                                 case -1:
-                                    console.log("FINDCROSS ERROR invalid value to late")
+                                    console.log("FINDCROSS ERROR invalid value to late 2")
                                     break;
                                 case this.arrdown.linearr.length:
-                                    console.log("FINDCROSS ERROR invalid value to early")
+                                    console.log("FINDCROSS ERROR invalid value to early 2")
                                     break;
                                 default:
-                                    this.arrdown.linearr.splice(index,this.arrdown.linearr.length-index-1,line.intersectionx(this.arrup.linearr[index]))
+                                    this.arrdown.secup.splice(index,this.arrdown.linearr.length-index+1,line.intersectionx(this.arrup.linearr[index]))
                                     break;
                                 case -2:
-                                    console.log("FINDCROSS ERROR error")
+                                    console.log("FINDCROSS ERROR error 2")
                                     break;
                             }
                         }
                         break;
                     case 3:
                         if(this.arrdown.linearr.length!=0){
-                        console.log(this.arrdown.findcrossalt(line))
+                            var index=this.arrdown.findcrossalt(line)
+                        console.log(index)
+                            switch(index){
+                                case -1:
+                                    console.log("FINDCROSS ERROR invalid value to early 3")
+                                    break;
+                                case this.arrdown.linearr.length:
+                                    console.log("FINDCROSS ERROR invalid value to late 3")
+                                    break;
+                                default:
+                                    this.arrdown.secup.splice(0,index+1,line.intersectionx(this.arrup.linearr[index]))
+                                    break;
+                                case -2:
+                                    console.log("FINDCROSS ERROR error 3")
+                                    break;
+                            }
                         }
                         break;
                 }
@@ -266,62 +283,97 @@
 
 
 
-    
+class Canvas{
+    canvas;
+    fig;
+    renderscale;
+    offsety;
+    offsetx;
+    constructor(canvas,fig=new Fig,renderscale=1,offsetx=canvas.width/2,offsety=canvas.height/2){
+        this.canvas=canvas
+        this.renderscale=renderscale
+        this.offsetx=offsetx;
+        this.offsety=offsety;
+        this.fig=fig
+    }
 
-function render(canvas,int){
-  canvas.width = 1000;
-  canvas.height = 1000;
-  const context = canvas.getContext('2d');
-  console.time('3');
-  const imageData =context.createImageData(1000,1000)
-  var dis2=imageData.data;
-  var track=0;
-  var boo=int%2
-for(let i=0;i<1000;i++){
-    //dis2.push([])
-    for(let j=0;j<1000;j++){
-        if(
-            (j>=(int%10)*100 && j<(int%10+1)*100)
-            && (i>=(int/10)*100 && i<(int/10+1)*100)
-            //boo
-        ){
-            dis2[track]=(0x00)
-            track++;
-            dis2[track]=(0x00)
-            track++;
-            dis2[track]=(0x00)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            //boo=false;
-        }else{
-            dis2[track]=(0xFF)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            //boo=true;
-        }
+drawline(line,lim1,lim2){
+    const ctx = this.canvas.getContext('2d');
+    const canvasx1 = -this.offsetx / this.renderscale;
+    const canvasx2 = (this.canvas.width - this.offsetx) / this.renderscale;
+    const x1 = Math.max(
+        canvasx1,
+        lim1 ?? -Infinity
+    );
+
+    const x2 = Math.min(
+        canvasx2,
+        lim2 ?? Infinity
+    );
+
+    if (x1 > x2) return;
+
+
+
+    const y1 = line.coef * x1 + line.move;
+    const y2 = line.coef * x2 + line.move;
+    console.log(y1)
+    ctx.beginPath();
+    ctx.moveTo(
+        this.offsetx + x1 * this.renderscale,
+        this.offsety - y1 * this.renderscale
+    );
+    ctx.lineTo(
+        this.offsetx + x2 * this.renderscale,
+        this.offsety - y2 * this.renderscale
+    );
+
+    ctx.stroke();
+    console.log(1)
+}
+
+renderlines(){
+  const context = this.canvas.getContext('2d');
+  //console.log(this.fig.arrup.linearr)
+for(let i=0;i<this.fig.arrup.linearr.length;i++){
+            context.strokeStyle = "blue";
+        context.lineWidth = 2;
+    this.drawline(this.fig.arrup.linearr[i].rotated(),)//this.fig.arrup.secup[i],this.fig.arrup.secup[i+1]
+}
+for(let i=0;i<this.fig.arrdown.linearr.length;i++){
+            context.strokeStyle = "blue";
+        context.lineWidth = 2;
+    this.drawline(this.fig.arrdown.linearr[i].rotated(),)//this.fig.arrdown.secup[i],this.fig.arrdown.secup[i+1]
+}
+};
+renderbreakpoints(){
+    const context = this.canvas.getContext('2d');
+    for(let br of this.fig.arrup.secup){
+    context.strokeStyle = "red";
+    context.lineWidth = 1;
+    this.drawline(new Line(0,-br))
+    }
+    for(let br of this.fig.arrdown.secup){
+    context.strokeStyle = "red";
+    context.lineWidth = 1;
+    this.drawline(new Line(0,-br))
     }
 }
-context.putImageData(imageData, 0,0)
-  console.timeEnd('3');
-};
 
-function loop(int) {
-    render(canva, int);
-    
+/*loop(int) {
     requestAnimationFrame(() => {
-        console.timeEnd('4');
-        console.time('4');
+        this.renderlines(int);
         if(int<99){
-        loop(int + 1);
+            this.loop(int + 1);
         }else{
             console.timeEnd('Second');
         }
     });
+}*/
+
 }
+
+
+
+
     

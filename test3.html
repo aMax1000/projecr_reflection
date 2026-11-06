@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    body{
+    background: gray;
+    }
+</style>
 <body>
-    
+    <canvas id="test1" height="500" width="500"></canvas>
 </body>
 <script src="justapi.js"></script>
-<script>
+<script defer>
     
     var e2=new Fig();
     e2.addlinef(new Line(2,1))
@@ -24,5 +29,12 @@
     e2.addlinef(new Line(3,2))
     console.log(e2.strprint())
 
+    const canva = document.getElementById('test1');
+    const cont = test1.getContext('2d')
+    cont.fillStyle="rgb(255,255,255)";
+    cont.fillRect(0, 0, 500, 500);
+    var can=new Canvas(canva,e2,50);
+    can.renderlines()
+    can.renderbreakpoints()
 </script>
 </html>
