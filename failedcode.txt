@@ -1,0 +1,98 @@
+//IN Line OBJECT
+
+/*addline(line,b=false){
+            let i=0
+            if(this.linearr.length==0){
+                this.linearr[0]=line;
+                console.log("d1")
+                return
+            }
+                console.log("d2")
+                console.log(this.findcross(line))
+                console.log(this.findcrossrevalt(line))
+                assend:{
+                while(i<this.linearr.length &&(
+                      (!b &&line.coef<=this.linearr[i].coef)||
+                      (b && line.coef>=this.linearr[i].coef))
+                      ){
+                        console.log("d3")
+
+                        //equal coef case
+                        if((!b && (line.coef==this.linearr[i].coef && line.move>=this.linearr[i].move)) ||
+                            (b && (line.coef==this.linearr[i].coef && line.move<=this.linearr[i].move))
+                            ){
+                                return
+                            }
+
+                        //main checker
+                        if (
+                            (!b && line.intersectionx(this.linearr[i])<=this.secup[i+1]) ||
+                            (b && line.intersectionx(this.linearr[i])>=this.secup[i+1])
+                        ){
+                            //
+                            if(i+1<this.linearr.length){
+                                this.secup[i+1]=line.intersectionx(this.linearr[i]);
+                                i++;
+                                console.log("d5")
+                                break assend
+                            }else{
+                                this.secup.push(this.secup[i+1])
+                                this.secup[i+1]=line.intersectionx(this.linearr[i]);
+                                console.log("d5.5")
+                                this.linearr.push(line);
+                                return  
+                            }
+
+                        }
+                        console.log("d6")
+                        i++
+                }
+                console.log("d4")
+                }
+                console.log("d7")
+                whille:{
+                while(i<this.linearr.length){
+                    console.log("d8")
+                    check:{
+                        console.log("d10")
+                        if(
+                            (!b && line.coef<=this.linearr[i].coef) ||
+                            (b && line.coef>=this.linearr[i].coef)
+                        ){   
+                            console.log("d8.8")
+                            break check;
+                        }
+                                    //console.log(line.intersectionx(this.linearr[i]))
+                                    //console.log(this.secup[i+1])
+                        if (
+                            (!b && line.intersectionx(this.linearr[i])<this.secup[i+1]) ||
+                            (b && line.intersectionx(this.linearr[i])>this.secup[i+1])
+                        ){
+                            console.log("d9")
+                            this.secup.splice(i+1, 0,line.intersectionx(this.linearr[i]));
+                            this.linearr.splice(i, 0,line);
+                            return
+                            }
+                        }
+                    //console.log(this.linearr[i])
+
+
+                    delete this.linearr[i]
+                    for(let j=i;j<this.linearr.length-1;j++){
+                        this.linearr[j]=this.linearr[j+1]
+                    }
+
+                    this.linearr.length--
+
+                    if(i+1<this.secup.length-1){
+                        delete this.secup[i+1]
+                        for(let j=i+1;j<this.secup.length-1;j++){
+                            this.secup[j]=this.secup[j+1]
+                        }
+                        this.secup.length--
+                    }
+                    }
+                    this.linearr[i]=line;
+                }
+                    //console.log(this.linearr[i])
+        }*/
