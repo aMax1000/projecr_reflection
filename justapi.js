@@ -44,6 +44,9 @@
         rotated(){
             return new Line(-1/this.coef,this.move/this.coef)
         }
+        reverse(){
+            return new Line(-this.coef,-this.move)
+        }
         strprint(){
             return `coef: ${this.coef}\nmove: ${this.move} \n`
         }
@@ -59,12 +62,15 @@
 
         findcross(line){
             var i=0
-            if(line.coef>this.linearr[i].coef && line.intersectionx(this.linearr[i])>this.secup[i]){return -1}
+            console.log(`t1`)
+            if(line.coef>this.linearr[i].coef){return -1}
             if(line.coef==this.linearr[i].coef && line.move<this.linearr[i].move){
                 return -1
             }
             while(i<this.linearr.length && line.coef<this.linearr[i].coef){
                         console.log("e3")
+                        console.log(line.intersectionx(this.linearr[i]))
+                        console.log(this.secup[i+1])
                         //main checker
                         if (line.intersectionx(this.linearr[i])<=this.secup[i+1]){
                             return i;
@@ -76,14 +82,19 @@
         }
 
 
-        findcrossrev(line){
+         findcrossrev(line){
+            console.log(`t2`)
             var i=this.linearr.length-1
-            if(line.coef>this.linearr[i].coef && line.intersectionx(this.linearr[i])>this.secup[i]){return this.linearr.length}
+            console.log(`this.secup[i] ${this.secup[i]}`)
+            if(line.coef>this.linearr[i].coef){return this.linearr.length}
             if(line.coef==this.linearr[i].coef && line.move>this.linearr[i].move){
-                return this.linearr.length
+ return this.linearr.length
             }
+            console.log(`t21`)
             while(i>=0 && line.coef<this.linearr[i].coef){
                         console.log("e3")
+                        console.log(line.intersectionx(this.linearr[i]))
+                        console.log(this.secup[i+1])
                         //main checker
                         if (line.intersectionx(this.linearr[i])<=this.secup[i+1]){
                             return i;
@@ -97,13 +108,17 @@
         
         findcrossalt(line){
             var i=0
-            if(line.coef<this.linearr[i].coef && line.intersectionx(this.linearr[i])<this.secup[i+1]){return -1}
+            console.log(`t3`)
+            if(line.coef<this.linearr[i].coef){return -1}
+            console.log(`t31`)
             if(line.coef==this.linearr[i].coef && line.move<this.linearr[i].move){
                 return -1
             }
             while(i<this.linearr.length && line.coef>this.linearr[i].coef){
                         console.log("e3")
                         //main checker
+                        console.log(line.intersectionx(this.linearr[i]))
+                        console.log(this.secup[i])
                         if (line.intersectionx(this.linearr[i])>=this.secup[i]){
                             return i;
                         }
@@ -116,12 +131,17 @@
 
         findcrossrevalt(line){
             var i=this.linearr.length-1
-            if(line.coef<this.linearr[i].coef && line.intersectionx(this.linearr[i])<this.secup[i+1]){return this.linearr.length}
+            console.log(`t4`)
+            if(line.coef<this.linearr[i].coef){
+                    return this.linearr.length
+                }
             if(line.coef==this.linearr[i].coef && line.move<this.linearr[i].move){
                 return this.linearr.length
             }
             while(i>=0 && line.coef>this.linearr[i].coef){
                         console.log("e3")
+                        console.log(line.intersectionx(this.linearr[i]))
+                        console.log(this.secup[i])
                         //main checker
                         if (line.intersectionx(this.linearr[i])>=this.secup[i]){
                             return i;
@@ -138,7 +158,7 @@
             if(this.linearr.length==0){
                 this.linearr[0]=line;
                 console.log("d1")
-                return ret
+                return 4
             }
             var p1
             var p2
@@ -172,8 +192,10 @@
                 inter2=Number.MAX_SAFE_INTEGER
                 ret=3
             }
-            this.secup.splice(p1+1,counter+1,inter1,inter2)
-            this.linearr.splice(p1+1,counter,line)
+            if(inter1!=inter2){
+                this.secup.splice(p1+1,counter+1,inter1,inter2)
+                this.linearr.splice(p1+1,counter,line)
+            }
             return ret;
         }
 
@@ -195,10 +217,66 @@
     class Fig{
         arrup;
         arrdown;
-        constructor(){
+        constructor(linearray=[]){
             this.arrup=new Secarr();
             this.arrdown=new Secarr(true);
+            for(const line of linearray){
+                if(line.move>0){
+                    this.arrup.push(line)
+                }else if(line.move<0){
+                    this.arrdown.push(line)
+                }else{
+                    console.log("ERROR OF LINES 0")
+                }
+            }
         }
+
+        cut(line){
+            if(this.arrdown.linearr.length!=0){
+                if(line.coef>this.arrdown.linearr[0].coef){
+                    var index=this.arrdown.findcrossalt(line)
+                    const intersect=line.intersectionx(this.arrdown.linearr[index])
+                    console.log(`index:${index}`)
+                    this.arrup.secup[0]=intersect
+                    this.arrdown.secup.splice(0,index+1,intersect)
+                    this.arrdown.linearr.splice(0,index)
+                }
+            }
+        }
+        cutrev(line){
+            if(this.arrdown.linearr.length!=0){
+                if(line.coef<this.arrdown.linearr[0].coef){
+                    var index=this.arrdown.findcrossrev(line)
+                    const intersect=line.intersectionx(this.arrdown.linearr[index])
+                    this.arrup.secup[this.arrup.secup.length-1]=intersect
+                    this.arrdown.secup.splice(index+1,this.arrdown.secup.length-index,intersect)
+                    this.arrdown.linearr.splice(index+1,this.arrdown.linearr.length-index)
+                }
+            }
+        }
+        cutalt(line){
+            if(this.arrup.linearr.length!=0){
+                if(line.coef>this.arrup.linearr[0].coef){
+                    var index=this.arrup.findcrossrevalt(line)
+                    const intersect=line.intersectionx(this.arrup.linearr[index])
+                    this.arrdown.secup[0]=intersect
+                    this.arrup.secup.splice(0,index+1,line.intersectionx(this.arrup.linearr[index]))
+                    this.arrup.linearr.splice(0,index)
+                }
+            }
+        }
+        cutrevalt(line){
+            if(this.arrup.linearr.length!=0){
+                if(line.coef<this.arrup.linearr[0].coef){
+                    var index=this.arrup.findcross(line)
+                    const intersect=line.intersectionx(this.arrup.linearr[index])
+                    this.arrdown.secup[this.arrup.secup.length-1]=intersect
+                    this.arrup.secup.splice(index+1,this.arrup.secup.length-index,intersect)
+                    this.arrup.linearr.splice(index+1,this.arrup.linearr.length-index)
+                }
+            }
+        }
+
         addlinef(line){
             if(line.move>0){
                 switch(this.arrup.addline(line)){
@@ -207,44 +285,14 @@
                     case 1:
                         return;
                     case 2:
-                        if(this.arrdown.linearr.length!=0){
-                            var index=this.arrdown.findcrossrev(line)
-                        console.log(index)
-                            switch(index){
-                                case -1:
-                                    console.log("FINDCROSS ERROR invalid value to late 2")
-                                    break;
-                                case this.arrdown.linearr.length:
-                                    console.log("FINDCROSS ERROR invalid value to early 2")
-                                    break;
-                                default:
-                                    this.arrdown.secup.splice(index,this.arrdown.linearr.length-index+1,line.intersectionx(this.arrup.linearr[index]))
-                                    break;
-                                case -2:
-                                    console.log("FINDCROSS ERROR error 2")
-                                    break;
-                            }
-                        }
+                        this.cut(line)
                         break;
                     case 3:
-                        if(this.arrdown.linearr.length!=0){
-                            var index=this.arrdown.findcrossalt(line)
-                        console.log(index)
-                            switch(index){
-                                case -1:
-                                    console.log("FINDCROSS ERROR invalid value to early 3")
-                                    break;
-                                case this.arrdown.linearr.length:
-                                    console.log("FINDCROSS ERROR invalid value to late 3")
-                                    break;
-                                default:
-                                    this.arrdown.secup.splice(0,index+1,line.intersectionx(this.arrup.linearr[index]))
-                                    break;
-                                case -2:
-                                    console.log("FINDCROSS ERROR error 3")
-                                    break;
-                            }
-                        }
+                        this.cutrev(line)
+                        break;
+                    case 4:
+                        this.cut(line)
+                        this.cutrev(line)
                         break;
                 }
             }else if(line.move<0){
@@ -254,13 +302,14 @@
                     case 1:
                         return;
                     case 2:
-                        if(this.arrup.length!=0){
+                        if(this.arrup.linearr.length!=0){
+                            var index=this.arrdown.findcrossrevalt(line)
                         console.log(this.arrup.findcross(line))
                         }
                         break;
                     case 3:
-                        if(this.arrup.length!=0){
-                        console.log(this.arrup.findcrossrevalt(line))
+                        if(this.arrup.linearr.length!=0){
+                        console.log(this.arrup.findcross(line))
                         }
                         break;
                 }
@@ -299,24 +348,17 @@ class Canvas{
 
 drawline(line,lim1,lim2){
     const ctx = this.canvas.getContext('2d');
-    const canvasx1 = -this.offsetx / this.renderscale;
-    const canvasx2 = (this.canvas.width - this.offsetx) / this.renderscale;
-    const x1 = Math.max(
-        canvasx1,
-        lim1 ?? -Infinity
-    );
+    const canvasy1 = -this.offsety / this.renderscale;
+    const canvasy2 = (this.canvas.height - this.offsety) / this.renderscale;
+    const y1 = (lim1==null?canvasy1:Math.max(canvasy1, lim1))
+    const y2 =(lim2==null?canvasy2:Math.min(canvasy2, lim2))
 
-    const x2 = Math.min(
-        canvasx2,
-        lim2 ?? Infinity
-    );
-
-    if (x1 > x2) return;
+    if (y1 > y2) return;
 
 
 
-    const y1 = line.coef * x1 + line.move;
-    const y2 = line.coef * x2 + line.move;
+    const x1 =  -y1/line.coef - line.move/line.coef;
+    const x2 =  -y2/line.coef - line.move/line.coef;
     console.log(y1)
     ctx.beginPath();
     ctx.moveTo(
@@ -338,12 +380,12 @@ renderlines(){
 for(let i=0;i<this.fig.arrup.linearr.length;i++){
             context.strokeStyle = "blue";
         context.lineWidth = 2;
-    this.drawline(this.fig.arrup.linearr[i].rotated(),)//this.fig.arrup.secup[i],this.fig.arrup.secup[i+1]
+    this.drawline(this.fig.arrup.linearr[i].rotated(),this.fig.arrup.secup[i],this.fig.arrup.secup[i+1])//
 }
 for(let i=0;i<this.fig.arrdown.linearr.length;i++){
-            context.strokeStyle = "blue";
+            context.strokeStyle = "yellow";
         context.lineWidth = 2;
-    this.drawline(this.fig.arrdown.linearr[i].rotated(),)//this.fig.arrdown.secup[i],this.fig.arrdown.secup[i+1]
+    this.drawline(this.fig.arrdown.linearr[i].rotated(),this.fig.arrdown.secup[i],this.fig.arrdown.secup[i+1])//
 }
 };
 renderbreakpoints(){
@@ -354,7 +396,7 @@ renderbreakpoints(){
     this.drawline(new Line(0,-br))
     }
     for(let br of this.fig.arrdown.secup){
-    context.strokeStyle = "red";
+    context.strokeStyle = "green";
     context.lineWidth = 1;
     this.drawline(new Line(0,-br))
     }

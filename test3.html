@@ -16,24 +16,28 @@
 <script src="justapi.js"></script>
 <script defer>
     
-    var e2=new Fig();
-    e2.addlinef(new Line(2,1))
-    console.log(e2.strprint())
+    var e2=new Fig()
+    e2.addlinef(new Line(2,-10))
+    console.log(e2.strprint())  
+    e2.addlinef(new Line(-2,10))
+    console.log(e2.strprint()) 
+    e2.addlinef(new Line(2,10))
+    console.log(e2.strprint()) 
+    e2.addlinef(new Line(1,-10))
+    console.log(e2.strprint()) 
 
-    e2.addlinef(new Line(1,2))
-    console.log(e2.strprint())
 
-    e2.addlinef(new Line(1.5,1))
-    console.log(e2.strprint())
 
-    e2.addlinef(new Line(3,2))
-    console.log(e2.strprint())
+
+
+
+    
 
     const canva = document.getElementById('test1');
     const cont = test1.getContext('2d')
     cont.fillStyle="rgb(255,255,255)";
     cont.fillRect(0, 0, 500, 500);
-    var can=new Canvas(canva,e2,50);
+    var can=new Canvas(canva,e2,10);
     can.renderlines()
     can.renderbreakpoints()
 </script>
