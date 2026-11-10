@@ -17,15 +17,17 @@
 <script defer>
     
     var e2=new Fig()
-    e2.addlinef(new Line(2,-10))
-    console.log(e2.strprint())  
-    e2.addlinef(new Line(-2,10))
-    console.log(e2.strprint()) 
-    e2.addlinef(new Line(2,10))
-    console.log(e2.strprint()) 
-    e2.addlinef(new Line(1,-10))
-    console.log(e2.strprint()) 
+        console.log('-')
+    e2.addlinef(new Line(-2,1))
+        console.log('-')
+    e2.addlinef(new Line(1,-1)) 
+    console.log('-')
+    e2.addlinef(new Line(2,1))
 
+
+    console.log('-')
+    e2.addlinef(new Line(2,-1))
+    console.log(e2.strprint())
 
 
 
@@ -37,7 +39,7 @@
     const cont = test1.getContext('2d')
     cont.fillStyle="rgb(255,255,255)";
     cont.fillRect(0, 0, 500, 500);
-    var can=new Canvas(canva,e2,10);
+    var can=new Canvas(canva,e2,75);
     can.renderlines()
     can.renderbreakpoints()
 </script>
