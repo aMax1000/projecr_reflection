@@ -256,7 +256,11 @@
                 console.log("cutrev2")
                 if(line.coef<this.arrdown.linearr[this.arrdown.linearr.length-1].coef){
                     console.log("cutrev3")
+<<<<<<< HEAD
                     var index=this.arrdown.findcrossrev(line)
+=======
+                    var index=this.arrdown.findcross(line)
+>>>>>>> origin/main
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrdown.linearr[index])
                     this.arrup.secup[this.arrup.secup.length-1]=intersect
@@ -273,7 +277,11 @@
                 console.log(this.arrup.linearr[0])
                 if(line.coef<this.arrup.linearr[0].coef){
                     console.log("cutalt3")
+<<<<<<< HEAD
                     var index=this.arrup.findcross(line)
+=======
+                    var index=this.arrup.findcrossrev(line)
+>>>>>>> origin/main
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrup.linearr[index])
                     this.arrdown.secup[0]=intersect
