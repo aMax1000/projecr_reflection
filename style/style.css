@@ -1,6 +1,18 @@
 :root{
-    --glass-bg: rgba(255, 255, 255, 0.4);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+    --glass-bg: rgba(22, 39, 31, 0.4);
+    --glass-border: 1px solid rgba(22, 39, 31, 0.4);
+    --glass-text: white;
+
+    --ui-bg: rgb(22, 39, 31);
+    --ui-border: rgb(19, 21, 18);
+    --ui-faded: rgb(53, 69, 60);
+    --ui-text: white;
+
+    --accent: rgb(217, 141, 33);
+    --accent-border: rgb(159, 51, 19);
+    --accent-faded: rgb(209, 122, 58);
+    --accent-text: rgb(19, 21, 18);
+
     --glass-backdrop-filter: blur(4px);
     --padding-default: 12px 20px;
 }
@@ -15,14 +27,15 @@ body{
     height: 100vh;
     margin: 0;
     /* TEMPORARY */
-    background-image: url(../imgs/inspo1.png);
+    /* background-image: url(../imgs/inspo1.png);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */
+    background-color: var(--ui-faded);
 }
 .glass{
     background: var(--glass-bg);
     border: var(--glass-border);
-    color: white;
+    color: var(--glass-text);
     transition: all 0.5s ease;
     backdrop-filter: var(--glass-backdrop-filter);
 }
@@ -40,7 +53,7 @@ main{
     align-content: center;
     text-align: center;
     h1, h2{
-        color: white;
+        color: var(--ui-text);
     }
     h1{
         font-size: 7.5rem;

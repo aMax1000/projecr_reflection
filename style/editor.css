@@ -3,25 +3,36 @@ main{
     flex-direction: column;
     list-style: none;
 }
+
 /* TOP MENU */
 .top-menu{
-    background-color: red;
+    background-color: var(--ui-bg);
+    color: var(--ui-text);
+    border: 1px solid var(--ui-border);
 
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 12px;
     padding: var(--padding-default);
+    align-items: center;
     .button-wrapper{
         margin-left: auto;
-        border-left: 1px solid white;
-        padding-left: 10px;
+        border-left: 1px solid var(--accent);
+        padding-left: 12px;
     }
     button{
-        border-left: 1px solid white;
+        border: 0;
+        border-radius: 6px;
+        background-color: var(--accent);
+        color: var(--accent-text);
+
+        padding: 8px;
     }
     .option{
-        padding-right: 10px;
-        border-right: 1px solid white;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 12px;
+        border-right: 1px solid var(--accent);
     }
     :nth-last-child(1 of .option){
         border-right: none;
@@ -33,21 +44,27 @@ main{
     flex-direction: row;
     max-height: 100%;
 }
+
 /* LEFT MENU */
 .left-menu{
-    background-color: blue;
+    background-color: var(--ui-bg);
+    color: var(--ui-text);
+    border: 1px solid var(--ui-border);
+    
     width: 15%;
     min-width: 200px;
     max-width: 750px;
     height: auto;
     padding: var(--padding-default);
-    overflow: scroll;
+    overflow: auto;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     .option{
         padding-bottom: 10px;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid var(--accent);
     }
     :nth-last-child(1 of .option){
         border-bottom: none;
