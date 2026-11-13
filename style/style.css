@@ -47,7 +47,7 @@ header{
     padding: var(--padding-default);
 }
 main{
-    height:0;
+    height:0; /* to prevent overflow */
     z-index: 10;
     flex-grow: 1;
     align-content: center;
