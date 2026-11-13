@@ -1,19 +1,25 @@
 :root{
-    --glass-bg: rgba(22, 39, 31, 0.4);
-    --glass-border: 1px solid rgba(22, 39, 31, 0.4);
-    --glass-text: white;
+    --primary: rgb(255, 255, 255);
+    --primary-border: 1px solid rgb(132, 132, 132);
+    --primary-faded: rgb(199, 199, 199);
+    --primary-text: rgb(0, 0, 0);
 
-    --ui-bg: rgb(22, 39, 31);
-    --ui-border: rgb(19, 21, 18);
-    --ui-faded: rgb(53, 69, 60);
-    --ui-text: white;
+    --secondary: rgb(172, 240, 208);
+    --secondary-border: 1px solid rgb(50, 126, 112);
+    --secondary-faded: rgb(131, 213, 179);
+    --secondary-text: rgb(0, 0, 0);
 
-    --accent: rgb(217, 141, 33);
-    --accent-border: rgb(159, 51, 19);
-    --accent-faded: rgb(209, 122, 58);
-    --accent-text: rgb(19, 21, 18);
+    --accent: rgb(255, 242, 125);
+    --accent-border: 1px solid rgb(222, 99, 11);
+    --accent-faded: rgb(255, 203, 61);
+    --accent-text: rgb(0, 0, 0);
 
+    --glass-bg: rgba(172, 240, 208, 0.4);
+    --glass-border: 1px solid rgba(172, 240, 208, 0.4);
+    --glass-text: rgb(0, 0, 0);
     --glass-backdrop-filter: blur(4px);
+
+    --transition: all 0.5s ease;
     --padding-default: 12px 20px;
 }
 *{
@@ -30,13 +36,13 @@ body{
     /* background-image: url(../imgs/inspo1.png);
     background-repeat: no-repeat;
     background-size: cover; */
-    background-color: var(--ui-faded);
+    background-color: var(--primary);
 }
 .glass{
     background: var(--glass-bg);
     border: var(--glass-border);
     color: var(--glass-text);
-    transition: all 0.5s ease;
+    transition: var(--transition);
     backdrop-filter: var(--glass-backdrop-filter);
 }
 header{
@@ -45,6 +51,12 @@ header{
     justify-content: space-between;
     align-items: center;
     padding: var(--padding-default);
+    .radio-choice{
+        input[type="radio"] {  
+            appearance: none;
+            margin: 0;
+        }
+    }
 }
 main{
     height:0; /* to prevent overflow */
@@ -53,7 +65,7 @@ main{
     align-content: center;
     text-align: center;
     h1, h2{
-        color: var(--ui-text);
+        color: var(--primary-text);
     }
     h1{
         font-size: 7.5rem;
