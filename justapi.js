@@ -8,6 +8,9 @@
             this.coef=parseFloat(coef);
             this.move=parseFloat(move);
         }
+        funct(x){
+            return this.coef*x+this.move
+        }
         isover(x,y){
             return ((x*this.coef+this.move)>y)
         }
@@ -17,7 +20,7 @@
         intersection(line){
             let co=(this.coef-line.coef);
             if(co){
-            var x=(-this.move+line.move)/co;
+            let x=(-this.move+line.move)/co;
             return [x,(x*this.coef+this.move)]
             }else{
                 console.log("ERRROR PARALELING LINES")
@@ -26,7 +29,7 @@
         intersectionx(line){
             let co=(this.coef-line.coef);
             if(co){
-            var x=(-this.move+line.move)/co;
+            let x=(-this.move+line.move)/co;
             return x
             }else{
                 console.log("ERRROR PARALELING LINES")
@@ -35,7 +38,7 @@
         intersectiony(line){
             let co=(this.coef-line.coef);
             if(co){
-            var x=(-this.move+line.move)/co;
+            let x=(-this.move+line.move)/co;
             return x*this.coef+this.move
             }else{
                 console.log("ERRROR PARALELING LINES")
@@ -50,6 +53,9 @@
         strprint(){
             return `coef: ${this.coef}\nmove: ${this.move} \n`
         }
+        yfilp(){
+            return new Line(-this.coef,this.move)
+        }
     };
 
     class Secarr{
@@ -61,7 +67,7 @@
 
 
         findcross(line){
-            var i=0
+            let i=0
             //console.log(`t1`)
             if(line.coef>this.linearr[i].coef){return -1}
             if(line.coef==this.linearr[i].coef && line.move<this.linearr[i].move){
@@ -84,7 +90,7 @@
 
          findcrossrev(line){
             //console.log(`t2`)
-            var i=this.linearr.length-1
+            let i=this.linearr.length-1
             //console.log(`this.secup[i] ${this.secup[i]}`)
             if(line.coef>this.linearr[i].coef){return this.linearr.length}
             if(line.coef==this.linearr[i].coef && line.move>this.linearr[i].move){
@@ -107,7 +113,7 @@
         
         
         findcrossalt(line){
-            var i=0
+            let i=0
             //console.log(`t3`)
             if(line.coef<this.linearr[i].coef){return -1}
             //console.log(`t31`)
@@ -130,7 +136,7 @@
 
 
         findcrossrevalt(line){
-            var i=this.linearr.length-1
+            let i=this.linearr.length-1
             //console.log(`t4`)
             if(line.coef<this.linearr[i].coef){
                     return this.linearr.length
@@ -154,14 +160,14 @@
 
 
         addline(line){
-            var ret=1;
+            let ret=1;
             if(this.linearr.length==0){
                 this.linearr[0]=line;
                 //console.log("d1")
                 return 4
             }
-            var p1
-            var p2
+            let p1
+            let p2
             if(this.b){
                 p1=this.findcrossalt(line)
                 if(p1==-2){return 0}
@@ -177,8 +183,8 @@
             let counter=p2-p1-1;
            // console.log(!counter)
             
-            var inter1;
-            var inter2;
+            let inter1;
+            let inter2;
             if(p1!=-1){
                 inter1=line.intersectionx(this.linearr[p1]);
             }else{
@@ -204,7 +210,7 @@
         }
 
         strprint(){
-            var a= `sec:${this.secup[0]}\n\n`
+            let a= `sec:${this.secup[0]}\n\n`
             for(let i=0;i<this.linearr.length;i++){
                 a+=this.linearr[i].strprint();
                 a+=`\nsec: ${this.secup[i+1]}\n\n`
@@ -221,6 +227,8 @@
     class Fig{
         arrup;
         arrdown;
+        intersectup;
+        intersectdown;
         constructor(linearray=[]){
             this.arrup=new Secarr();
             this.arrdown=new Secarr(true);
@@ -241,12 +249,13 @@
                 console.log("cut2")
                 if(line.coef>this.arrdown.linearr[0].coef){
                     console.log("cut3")
-                    var index=this.arrdown.findcrossalt(line)
+                    let index=this.arrdown.findcrossalt(line)
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrdown.linearr[index])
                     this.arrup.secup[0]=intersect
                     this.arrdown.secup.splice(0,index+1,intersect)
                     this.arrdown.linearr.splice(0,index)
+                    this.intersectup=intersect
                 }
             }
         }
@@ -256,16 +265,13 @@
                 console.log("cutrev2")
                 if(line.coef<this.arrdown.linearr[this.arrdown.linearr.length-1].coef){
                     console.log("cutrev3")
-<<<<<<< HEAD
-                    var index=this.arrdown.findcrossrev(line)
-=======
-                    var index=this.arrdown.findcross(line)
->>>>>>> origin/main
+                    let index=this.arrdown.findcrossrev(line)
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrdown.linearr[index])
                     this.arrup.secup[this.arrup.secup.length-1]=intersect
                     this.arrdown.secup.splice(index+1,this.arrdown.secup.length-index,intersect)
                     this.arrdown.linearr.splice(index+1,this.arrdown.linearr.length-index)
+                    this.intersectdown=intersect
                 }
             }
         }
@@ -277,16 +283,13 @@
                 console.log(this.arrup.linearr[0])
                 if(line.coef<this.arrup.linearr[0].coef){
                     console.log("cutalt3")
-<<<<<<< HEAD
-                    var index=this.arrup.findcross(line)
-=======
-                    var index=this.arrup.findcrossrev(line)
->>>>>>> origin/main
+                    let index=this.arrup.findcross(line)
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrup.linearr[index])
                     this.arrdown.secup[0]=intersect
                     this.arrup.secup.splice(0,index+1,intersect)
                     this.arrup.linearr.splice(0,index)
+                    this.intersectup=intersect
                 }
             }
         }
@@ -294,12 +297,13 @@
             console.log("cutrevalt")
             if(this.arrup.linearr.length!=0){
                 if(line.coef>this.arrup.linearr[this.arrup.linearr.length-1].coef){
-                    var index=this.arrup.findcrossrevalt(line)
+                    let index=this.arrup.findcrossrevalt(line)
                     console.log(`index:${index}`)
                     const intersect=line.intersectionx(this.arrup.linearr[index])
                     this.arrdown.secup[this.arrdown.secup.length-1]=intersect
                     this.arrup.secup.splice(index+1,this.arrup.secup.length-index,intersect)
                     this.arrup.linearr.splice(index+1,this.arrup.linearr.length-index)
+                    this.intersectdown=intersect
                 }
             }
         }
@@ -346,7 +350,7 @@
 
         }
         strprint(){
-            var a="ARRUP:\n\n"
+            let a="ARRUP:\n\n"
             a+=this.arrup.strprint()
             a+="\n\n ARRDOWN:\n\n"
             a+=this.arrdown.strprint()
@@ -427,7 +431,54 @@ renderbreakpoints(){
     this.drawline(new Line(0,-br))
     }
 }
-
+figtocanvas(){
+    let step=1/this.renderscale;
+    const context = this.canvas.getContext('2d');
+    const imageData =context.createImageData(this.canvas.height,this.canvas.width)
+    let dis2=imageData.data;
+    
+    let ittup=0
+    let ittdown=0
+    let ibase=parseInt(Math.max(0,(this.fig.intersectup*this.renderscale+this.offsety)))
+    let currenti=-(this.offsety-ibase)/this.renderscale
+    let track=(this.offsety-ibase)*this.canvas.height*4;
+    //console.log(this.fig.intersectup*this.renderscale+this.offsety)
+    for(let i=ibase;i<Math.min(this.canvas.height,(this.fig.intersectdown*this.renderscale+this.offsety));i++){
+        while(this.fig.arrup.secup[ittup+1]<currenti){
+            ittup++
+        }
+        while(this.fig.arrdown.secup[ittdown+1]<currenti){
+            ittdown++
+        }
+        console.log(this.fig.arrdown.linearr[ittdown])
+        console.log(ittdown)
+        let startj=parseInt(this.fig.arrdown.linearr[ittdown].funct(currenti)*this.renderscale)+this.offsetx
+        let endj=parseInt(this.fig.arrup.linearr[ittup].funct(currenti)*this.renderscale)+this.offsetx
+        for(let j=0;j<this.canvas.width;j++){
+            if(j>startj && j<=endj){
+            dis2[track]=(0x00)
+            track++;
+            dis2[track]=(0xFF)
+            track++;
+            dis2[track]=(0x00)
+            track++;
+            dis2[track]=(0xFF)
+            track++;
+            }else{
+            dis2[track]=(0xFF)
+            track++;
+            dis2[track]=(0xFF)
+            track++;
+            dis2[track]=(0x00)
+            track++;
+            dis2[track]=(0xFF)
+            track++;
+            }
+        }
+        currenti+=step;
+    }
+    context.putImageData(imageData, 0,0)
+}
 /*loop(int) {
     requestAnimationFrame(() => {
         this.renderlines(int);

@@ -17,7 +17,6 @@
 <script defer>
     
     var e2=new Fig()
-<<<<<<< HEAD
     e2.addlinef(new Line(2,-1))
     e2.addlinef(new Line(1,-1)) 
     e2.addlinef(new Line(2,1))
@@ -32,18 +31,6 @@
 
     console.log('-')
     
-=======
-        console.log('-')
-    e2.addlinef(new Line(-2,1))
-        console.log('-')
-    e2.addlinef(new Line(1,-1)) 
-    console.log('-')
-    e2.addlinef(new Line(2,1))
-
-
-    console.log('-')
-    e2.addlinef(new Line(2,-1))
->>>>>>> origin/main
     console.log(e2.strprint())
 
 
@@ -57,6 +44,7 @@
     cont.fillStyle="rgb(255,255,255)";
     cont.fillRect(0, 0, 500, 500);
     var can=new Canvas(canva,e2,75);
+    can.figtocanvas()
     can.renderlines()
     can.renderbreakpoints()
 </script>
