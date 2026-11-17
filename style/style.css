@@ -1,17 +1,15 @@
 :root{
     --primary: rgb(255, 255, 255);
-    --primary-border: 1px solid rgb(132, 132, 132);
-    --primary-faded: rgb(199, 199, 199);
     --primary-text: rgb(0, 0, 0);
 
-    --secondary: rgb(172, 240, 208);
-    --secondary-border: 1px solid rgb(50, 126, 112);
-    --secondary-faded: rgb(131, 213, 179);
+    --secondary: rgb(122, 246, 174);
+    --secondary-border: 1px solid rgb(21, 118, 95);
+    --secondary-faded: rgb(72, 196, 148);
     --secondary-text: rgb(0, 0, 0);
 
-    --accent: rgb(255, 242, 125);
-    --accent-border: 1px solid rgb(222, 99, 11);
-    --accent-faded: rgb(255, 203, 61);
+    --accent: rgb(255, 253, 112);
+    --accent-border: 1px solid rgb(220, 117, 55);
+    --accent-faded: rgb(249, 175, 75);
     --accent-text: rgb(0, 0, 0);
 
     --glass-bg: rgba(172, 240, 208, 0.4);
@@ -20,6 +18,7 @@
     --glass-backdrop-filter: blur(4px);
 
     --transition: all 0.5s ease;
+    --transition-fast: all 0.2s ease;
     --padding-default: 12px 20px;
 }
 *{

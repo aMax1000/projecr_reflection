@@ -13,7 +13,7 @@ main{
 .top-menu{
     background-color: var(--primary);
     color: var(--primary-text);
-    border: var(--primary-border);
+    border: var(--secondary-border);
     border-top: none;
     border-left: none;
     border-right: none;
@@ -30,6 +30,7 @@ main{
         padding-left: 12px;
     }
     button{
+        transition: var(--transition-fast);
         border: var(--accent-border);
         border-radius: 6px;
         background-color: var(--accent);
@@ -37,14 +38,26 @@ main{
 
         padding: 8px;
     }
+    button:hover{
+        background-color: var(--accent-faded);
+    }
     .option{
         padding-top: 6px;
         padding-bottom: 6px;
-        padding-right: 12px;
-        border-right: 1px solid var(--secondary);
+        padding-left: 12px;
+        border-left: 1px solid var(--secondary);
     }
-    :nth-last-child(1 of .option){
-        border-right: none;
+    .option:hover{
+        transition: var(--transition-fast);
+        text-shadow: 0 0 20px var(--accent);
+        border-left: var(--accent-border);
+    }
+    .option:hover + .option{
+        transition: var(--transition-fast);
+        border-left: var(--accent-border);
+    }
+    .option:first-child{
+        border-left: none;
     }
 }
 .editor-wrapper{
@@ -59,7 +72,7 @@ main{
 .left-menu{
     background-color: var(--primary);
     color: var(--primary-text);
-    border: var(--primary-border);
+    border: var(--secondary-border);
     border-top: none;
     border-left: none;
     border-bottom: none;
@@ -78,7 +91,7 @@ main{
 
     /* SCROLLBAR */
     scrollbar-color: var(--secondary) var(--secondary-faded);
-    scrollbar-width:auto;
+    scrollbar-width: auto;
 
     .option{
         padding-bottom: 10px;
@@ -86,6 +99,32 @@ main{
     }
     :nth-last-child(1 of .option){
         border-bottom: none;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 80%;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--secondary-faded);
+        transition: var(--transition-fast);
+        cursor: pointer;
+    }
+    .slider:hover {
+        background: var(--accent-faded);
+    }
+    .slider::-webkit-slider-thumb, .slider::-moz-range-thumb{
+        -webkit-appearance: none;
+        appearance: none;
+        width: 8px;
+        height: 8px;
+        background: var(--secondary);
+        border: none;
+    }
+    .slider:hover::-webkit-slider-thumb, .slider:hover::-moz-range-thumb{
+        background: var(--accent);
+        transition: var(--transition-fast);
     }
 }
 .canvas{
