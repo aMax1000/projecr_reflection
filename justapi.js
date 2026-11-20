@@ -370,7 +370,7 @@ class Canvas{
     renderscale;
     offsety;
     offsetx;
-    constructor(canvas,fig=new Fig,renderscale=1,offsetx=canvas.width/2,offsety=canvas.height/2){
+    constructor(canvas,renderscale=1,fig=new Fig,offsetx=canvas.width/2,offsety=canvas.height/2){
         this.canvas=canvas
         this.renderscale=renderscale
         this.offsetx=offsetx;
@@ -439,13 +439,22 @@ renderbreakpoints(){
     context.stroke();
     }
 }
+
+figtocanvas(figlines){
+    this.fig=new Fig;
+    for(let line in figlines){
+        this.fig.addlinef(line);
+    }
+    this.figtocanvas()
+}
+
 figtocanvas(){
-    console.log(3)
+    //console.log(3)
     let step=1/this.renderscale;
     const context = this.canvas.getContext('2d');
     const imageData =context.createImageData(this.canvas.height,this.canvas.width)
     let dis2=imageData.data;
-    console.log(4)
+    //console.log(4)
     let ittup=0
     let ittdown=0
     let ibase=parseInt(Math.max(0,(this.fig.intersectup*this.renderscale+this.offsety)))
@@ -453,9 +462,9 @@ figtocanvas(){
     let track=ibase*this.canvas.height*4;
     //console.log(currenti*this.canvas.height*4)
     //console.log(this.fig.intersectup*this.renderscale+this.offsety)
-    console.log(5)
-    console.log(ibase)
-    console.log(this.fig.intersectdown*this.renderscale+this.offsety)
+    //console.log(5)
+    //console.log(ibase)
+    //console.log(this.fig.intersectdown*this.renderscale+this.offsety)
     for(let i=ibase;i<Math.min(this.canvas.height,this.fig.intersectdown*this.renderscale+this.offsety);i++){
          //console.log(5.5)
         while(this.fig.arrup.secup[ittup+1]<currenti){
@@ -464,16 +473,15 @@ figtocanvas(){
         while(this.fig.arrdown.secup[ittdown+1]<currenti){
             ittdown++
         }
-        console.log(this.fig.arrdown.linearr[ittdown])
-        console.log(ittdown)
+        //console.log(this.fig.arrdown.linearr[ittdown])
+        //console.log(ittdown)
         let startj=Math.max(0,parseInt(this.fig.arrdown.linearr[ittdown].funct(currenti)*this.renderscale)+this.offsetx)
-        console.log(startj)
+        //console.log(startj)
         let endj=Math.min(this.canvas.width,parseInt(this.fig.arrup.linearr[ittup].funct(currenti)*this.renderscale)+this.offsetx)
-        console.log(endj)
+        //console.log(endj)
         track+=startj*4
         if(startj<endj){
         for(let j=startj;j<endj;j++){
-            if(j>=startj && j<=endj){
             dis2[track]=(0x00)
             track++;
             dis2[track]=(0xFF)
@@ -482,16 +490,6 @@ figtocanvas(){
             track++;
             dis2[track]=(0xFF)
             track++;
-            }else{
-            dis2[track]=(0xFF)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            dis2[track]=(0x00)
-            track++;
-            dis2[track]=(0xFF)
-            track++;
-            }
         }
         track+=(this.canvas.width-endj)*4;
         }else{
