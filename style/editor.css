@@ -1,6 +1,15 @@
 header{
     h1{
         font-size: 1rem;
+        transition: var(--transition);
+        a{
+            text-decoration: none;
+            color: var(--primary-text);
+        }
+    }
+    h1:hover{
+        transform: scale(1.1);
+        transform-origin: center;
     }
 }
 main{
@@ -21,13 +30,13 @@ main{
 
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: 16px;
     padding: var(--padding-default);
     align-items: center;
     .button-wrapper{
         margin-left: auto;
         border-left: 1px solid var(--secondary);
-        padding-left: 12px;
+        padding-left: 16px;
     }
     button{
         transition: var(--transition-fast);
@@ -48,8 +57,9 @@ main{
     .option{
         padding-top: 6px;
         padding-bottom: 6px;
-        padding-left: 12px;
+        padding-left: 16px;
         border-left: 1px solid var(--secondary);
+        transition: var(--transition-fast);
     }
     .option:hover{
         transition: var(--transition-fast);
@@ -62,11 +72,11 @@ main{
         }
     }
     .option:hover + .option{
-        transition: var(--transition-fast);
         border-left: var(--accent-border);
     }
     .option:first-child{
         border-left: none;
+        padding-left: 6px;
     }
 }
 .editor-wrapper{
@@ -103,13 +113,14 @@ main{
     scrollbar-width: auto;
 
     .option{
-        padding-top: 12px;
-        padding-bottom: 2px;
+        padding-top: 16px;
+        padding-bottom: 6px;
         border-top: 1px solid var(--secondary);
         display: flex;
         align-items: center;
         flex-direction: column;
         gap:12px;
+        transition: var(--transition-fast);
         .section-title{
             font-size: 1.2rem;
             padding-bottom: 12px;
@@ -152,6 +163,7 @@ main{
         height: 8px;
         background: var(--secondary);
         border: none;
+        transition: var(--transition-fast);
     }
     .slider:hover::-webkit-slider-thumb, .slider:hover::-moz-range-thumb{
         background: var(--accent);
