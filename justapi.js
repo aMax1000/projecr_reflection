@@ -1,6 +1,6 @@
 
-
-
+const maxrenderscale=32767;
+const maxsafevalue=Number.MAX_SAFE_INTEGER/(2*maxrenderscale)
 
 
     class Line{
@@ -61,7 +61,7 @@
     class Secarr{
         constructor(b=false){
             this.linearr=[];
-            this.secup=[Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER];
+            this.secup=[-maxsafevalue,10000000];
             this.b=b;
         }
 
@@ -188,14 +188,14 @@
             if(p1!=-1){
                 inter1=line.intersectionx(this.linearr[p1]);
             }else{
-                inter1=Number.MIN_SAFE_INTEGER
+                inter1=-maxsafevalue
                 ret=2
             }
             if(p2!=this.linearr.length){
                 inter2=line.intersectionx(this.linearr[p2]);
                 
             }else{
-                inter2=Number.MAX_SAFE_INTEGER
+                inter2=maxsafevalue
                 if(ret==2){
                     ret=4
                 }else{
@@ -232,7 +232,9 @@
         constructor(linearray=[]){
             this.arrup=new Secarr();
             this.arrdown=new Secarr(true);
-            for(const line of linearray){
+            this.intersectup=-maxsafevalue
+            this.intersectdown=maxsafevalue
+            /*for(const line of linearray){
                 if(line.move>0){
                     this.arrup.push(line)
                 }else if(line.move<0){
@@ -240,7 +242,7 @@
                 }else{
                     console.log("ERROR OF LINES 0")
                 }
-            }
+            }*/
         }
 
         cut(line){
@@ -393,11 +395,11 @@ drawline(line,lim1,lim2){
     ctx.beginPath();
     ctx.moveTo(
         this.offsetx + x1 * this.renderscale,
-        this.offsety - y1 * this.renderscale
+        this.offsety + y1 * this.renderscale
     );
     ctx.lineTo(
         this.offsetx + x2 * this.renderscale,
-        this.offsety - y2 * this.renderscale
+        this.offsety + y2 * this.renderscale
     );
 
     ctx.stroke();
@@ -423,27 +425,39 @@ renderbreakpoints(){
     for(let br of this.fig.arrup.secup){
     context.strokeStyle = "red";
     context.lineWidth = 1;
-    this.drawline(new Line(0,-br))
+    context.beginPath()
+    context.moveTo(0,br*this.renderscale+this.offsety)
+    context.lineTo(this.canvas.height,br*this.renderscale+this.offsety)
+    context.stroke();
     }
     for(let br of this.fig.arrdown.secup){
     context.strokeStyle = "green";
     context.lineWidth = 1;
-    this.drawline(new Line(0,-br))
+    context.beginPath()
+    context.moveTo(0,br*this.renderscale+this.offsety)
+    context.lineTo(this.canvas.height,br*this.renderscale+this.offsety)
+    context.stroke();
     }
 }
 figtocanvas(){
+    console.log(3)
     let step=1/this.renderscale;
     const context = this.canvas.getContext('2d');
     const imageData =context.createImageData(this.canvas.height,this.canvas.width)
     let dis2=imageData.data;
-    
+    console.log(4)
     let ittup=0
     let ittdown=0
     let ibase=parseInt(Math.max(0,(this.fig.intersectup*this.renderscale+this.offsety)))
     let currenti=-(this.offsety-ibase)/this.renderscale
-    let track=(this.offsety-ibase)*this.canvas.height*4;
+    let track=ibase*this.canvas.height*4;
+    //console.log(currenti*this.canvas.height*4)
     //console.log(this.fig.intersectup*this.renderscale+this.offsety)
-    for(let i=ibase;i<Math.min(this.canvas.height,(this.fig.intersectdown*this.renderscale+this.offsety));i++){
+    console.log(5)
+    console.log(ibase)
+    console.log(this.fig.intersectdown*this.renderscale+this.offsety)
+    for(let i=ibase;i<Math.min(this.canvas.height,this.fig.intersectdown*this.renderscale+this.offsety);i++){
+         //console.log(5.5)
         while(this.fig.arrup.secup[ittup+1]<currenti){
             ittup++
         }
@@ -452,10 +466,14 @@ figtocanvas(){
         }
         console.log(this.fig.arrdown.linearr[ittdown])
         console.log(ittdown)
-        let startj=parseInt(this.fig.arrdown.linearr[ittdown].funct(currenti)*this.renderscale)+this.offsetx
-        let endj=parseInt(this.fig.arrup.linearr[ittup].funct(currenti)*this.renderscale)+this.offsetx
-        for(let j=0;j<this.canvas.width;j++){
-            if(j>startj && j<=endj){
+        let startj=Math.max(0,parseInt(this.fig.arrdown.linearr[ittdown].funct(currenti)*this.renderscale)+this.offsetx)
+        console.log(startj)
+        let endj=Math.min(this.canvas.width,parseInt(this.fig.arrup.linearr[ittup].funct(currenti)*this.renderscale)+this.offsetx)
+        console.log(endj)
+        track+=startj*4
+        if(startj<endj){
+        for(let j=startj;j<endj;j++){
+            if(j>=startj && j<=endj){
             dis2[track]=(0x00)
             track++;
             dis2[track]=(0xFF)
@@ -474,6 +492,10 @@ figtocanvas(){
             dis2[track]=(0xFF)
             track++;
             }
+        }
+        track+=(this.canvas.width-endj)*4;
+        }else{
+            track+=this.canvas.width*4;
         }
         currenti+=step;
     }
