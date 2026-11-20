@@ -8,7 +8,7 @@ header{
         }
     }
     h1:hover{
-        transform: scale(1.1);
+        transform: scale(1.05);
         transform-origin: center;
     }
 }
@@ -18,7 +18,7 @@ main{
     list-style: none;
 }
 
-/* TOP MENU */
+/* ----- TOP MENU ----- */
 .top-menu{
     background-color: var(--primary);
     color: var(--primary-text);
@@ -55,18 +55,24 @@ main{
     }
 
     .option{
+        appearance: none;
         padding-top: 6px;
         padding-bottom: 6px;
         padding-left: 16px;
         border-left: 1px solid var(--secondary);
         transition: var(--transition-fast);
+        li{
+            appearance: none;
+            list-style: none;
+            transition: var(--transition-fast);
+        }
     }
     .option:hover{
         transition: var(--transition-fast);
         text-shadow: 0 0 20px var(--accent);
         border-left: var(--accent-border);
-        p{
-            transform: scale(1.1);
+        li{
+            transform: scale(1.05);
             transform-origin: center;
             transition: var(--transition-fast);
         }
@@ -79,15 +85,83 @@ main{
         padding-left: 6px;
     }
 }
-.editor-wrapper{
-    height: 0; /* to prevent overflow */
-    flex-grow: 1;
+
+/* ----- TOP MENU SUB MENUS ----- */
+.top-menu ul li {
+    position: relative;
+}
+.top-menu ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+}
+.top-menu ul ul li {
+    float: none;
+    position: relative;
+    border-top: 1px solid var(--secondary);
+    padding-top: 12px;
+    transition: var(--transition-fast);
+    p{
+        transition: var(--transition-fast);
+    }
+}
+.top-menu ul ul li:hover {
+    border-top: var(--accent-border);
+    text-shadow: 0 0 20px var(--accent);
+    transition: var(--transition-fast);
+    p{
+        transform: scale(1.05);
+        transform-origin: center;
+    }
+}
+.top-menu ul ul li:hover + li {
+    border-top: var(--accent-border);
+}
+.top-menu ul ul li:first-child{
+    border-top: none;
+    padding-top: 6px;
+}
+.top-menu li {
+    float: left;
+}
+.top-menu li p {
+    display: block;
+    background: var(--primary);
+}
+.top-menu ul p:hover {
+    transition: var(--transition-fast);
+    text-shadow: 0 0 20px var(--accent);
+}
+.top-menu ul li:hover>ul {
+    display: block;
+    /* border: var(--accent-border); */
+    padding-top: 4px;
+    border-top: none;
+    position: absolute;
+    left: -14px;
+    min-width: 100%;
+}
+.top-menu li {
+    text-align: center;
+}
+.top-menu ul {
+    position: relative;
+}
+.sub-menu-item{
+    text-shadow: none;
+}
+.sub-wrapper{
     display: flex;
-    flex-direction: row;
-    max-height: 100%;
+    flex-direction: column;
+    gap: 12px;
+    background-color: var(--primary);
+    padding: 16px;
+    padding-top: 12px;
+    border: var(--accent-border);
+    border-top: none;
 }
 
-/* LEFT MENU */
+/* ----- LEFT MENU ----- */
 .left-menu{
     background-color: var(--primary);
     color: var(--primary-text);
@@ -119,7 +193,7 @@ main{
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap:12px;
+        gap: 12px;
         transition: var(--transition-fast);
         .section-title{
             font-size: 1.2rem;
@@ -185,11 +259,12 @@ main{
             background-color: var(--secondary-faded);
             border: var(--secondary-border);
             border-radius: 6px;
+            transition: var(--transition-fast);
         }
         input[type="checkbox"]:hover {  
             background-color: var(--secondary);
             border: var(--secondary-border);
-            transform: scale(1.1);
+            transform: scale(1.05);
             transform-origin: center;
             transition: var(--transition-fast);
             cursor: pointer;
@@ -200,6 +275,15 @@ main{
             transition: var(--transition-fast);
         }
     }
+}
+
+/* ----- EDITOR ----- */
+.editor-wrapper{
+    height: 0; /* to prevent overflow */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    max-height: 100%;
 }
 .canvas{
     flex-grow: 1;

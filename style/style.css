@@ -21,7 +21,7 @@
     --transition-fast: all 0.2s ease;
     --padding-default: 12px 20px;
 }
-*{
+*, *::before, *::after{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
